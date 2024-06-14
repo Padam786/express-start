@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const fs = require("fs");
 
-const users = require("./MOCK_DATA.json");
+let users = require("./MOCK_DATA.json");
 
 const port = 3000;
 
@@ -41,17 +41,16 @@ app.post("/:id", (req, res) => {
   });
 });
 
-
 //for data update , use put method
 app.put("/:id", (req, res) => {
-  //get id from params/url 
+  //get id from params/url
   const id = parseInt(req.params.id);
 
   //check  user id is match with params id
   const index = users.findIndex((item) => item.id === id);
 
   //if id not match with params id
-  if (!index) {
+  if (index === -1) {
     return res.status(404).json({
       message: "item not found",
     });
@@ -74,14 +73,9 @@ app.put("/:id", (req, res) => {
   });
 });
 
-//for data delete, use delete method / Homework 
+//for data delete, use delete method / Homework
 
-
-
-
-
-
-//listening port 
+//listening port
 
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
