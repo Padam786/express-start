@@ -80,30 +80,27 @@ app.put("/:id", (req, res) => {
 
 //for data delete, use delete method / Homework
 
-app.delete('/:id', (req, res)=>{
-  const {id} = req.params;
-  const checkUser = users.find(item => item.id === id)
+app.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  const index = users.findIndex(item => item.id === id);
   
-  if (!checkUser) {
+  if (index === -1) {
     return res.status(404).json({
       msg: "User Not Found"
-    }) 
-  }
-  else {
-     users.splice(id, 1);
-     return res.status(200).json({
+    });
+  } else {
+    // Remove the user using splice
+    users.splice(index, 1);
+
+    // Alternatively, you can use filter to remove the user
+    // users = users.filter(item => item.id !== id);
+
+    return res.status(200).json({
       msg: "User Deleted Successfully"
-     })
-
-     //filter 
-     //users = users.filter(item => item.id!== id)
-     //return res.status(200).json({
-     //  msg: "User Deleted Successfully"
-
+    });
   }
+});
 
-
-})
 
 //listening port
 
