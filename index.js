@@ -4,6 +4,10 @@ const fs = require("fs");
 
 let users = require("./MOCK_DATA.json");
 
+
+let name = "padam"
+
+
 const port = 3000;
 
 //for json support middlware
@@ -19,7 +23,7 @@ app.get("/", (req, res) => {
 });
 
 //for creating new user using post method
-app.post("/:id", (req, res) => {
+app.post("/", (req, res) => {
   // //get item from cilent / body
   const items = req.body;
 
@@ -55,6 +59,7 @@ app.put("/:id", (req, res) => {
       message: "item not found",
     });
   } else {
+    users[1]
     //get item from cilent / body and update it to index
     users[indexItem] = { id, ...req.body };
 
@@ -74,6 +79,31 @@ app.put("/:id", (req, res) => {
 });
 
 //for data delete, use delete method / Homework
+
+app.delete('/:id', (req, res)=>{
+  const {id} = req.params;
+  const checkUser = users.find(item => item.id === id)
+  
+  if (!checkUser) {
+    return res.status(404).json({
+      msg: "User Not Found"
+    }) 
+  }
+  else {
+     users.splice(id, 1);
+     return res.status(200).json({
+      msg: "User Deleted Successfully"
+     })
+
+     //filter 
+     //users = users.filter(item => item.id!== id)
+     //return res.status(200).json({
+     //  msg: "User Deleted Successfully"
+
+  }
+
+
+})
 
 //listening port
 
