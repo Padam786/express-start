@@ -10,21 +10,38 @@ app.use(express.urlencoded({ extended: true }));
 const prisma = require("./config/prisma");
 
 
+
+
 //homework for you . 
 
 app.post("/user", async(req,res)=>{
   try {
-    //get from frontend
 
-    //validation
-
-    //database ma save garne
-
+    // email String  @unique
+    // name  String?
+    // phone  Int
+    //get data from frontend
+    const {email, name, phone} = req.body;
     //send responnse to frontend
-  
-  } catch (error) {
 
-    //error handle using status 500
+    const saveUser = await prisma.user.create({
+      data: {
+        email: email,
+        name: name,
+        phone: phone,
+      }
+    })
+
+    return res.status(201).json({
+      message: "user created successfully",
+      data: saveUser,
+    })
+ 
+  } catch (error) {
+    return res.status(500).json({
+      message: "Server Error",
+      error: error,
+    })
 
   }
 
@@ -34,7 +51,7 @@ app.post("/user", async(req,res)=>{
 
 
 
-app.post("/", async (req, res) => {
+app.post("/post", async (req, res) => {
   ///get data from body-manidatory
   try {
     const { title, content, published, user_id } = req.body;
@@ -50,9 +67,9 @@ app.post("/", async (req, res) => {
     //to save data in database
     const saveData = await prisma.post.create({
       data: {
-        title: title,
-        content: content,
-        published: published,
+        title,
+        content,
+        published,
         user_id: parseInt(user_id),
       },
     });
@@ -71,7 +88,45 @@ app.post("/", async (req, res) => {
 });
 
 
+app.put('/post/:id', async(req,res)=>{
+    try {
+      //get id req.params
+      //get data from frontend
+      //save data to user to id  method update use / where
 
+      //return response
+
+    } catch (error) {
+
+      //return error
+      
+    }
+}) 
+
+
+
+
+
+
+
+
+app.get('/post', async(req,res)=> {
+try {
+    const data = await prisma.post.findMany({
+      include: {
+        user: true,
+      },
+    });
+    return res.status(200).json({
+      message: "Post fetched successfully",
+      data: data,
+    })
+} catch (error) {
+    return res.status(500).json({
+      message: "Sever error",
+      error: error,
+    })
+}})
 
 
 
