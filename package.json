@@ -12,7 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.15.1",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.3",

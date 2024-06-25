@@ -2,28 +2,27 @@ const express = require("express");
 const app = express();
 const port = 3000;
 //for json support middlware
+
+
 app.use(express.json());
+
+app.use('/storage', express.static('storage'))
+
 
 //for urlencoded support or object support middlewar
 app.use(express.urlencoded({ extended: true }));
 
+
+
 const prisma = require("./config/prisma");
-
-
+const upload = require("./middleware/upload");
 
 
 //homework for you . 
 
-app.post("/user", async(req,res)=>{
+app.post("/user", upload.single("image") ,     async(req,res)=>{
   try {
-
-    // email String  @unique
-    // name  String?
-    // phone  Int
-    //get data from frontend
     const {email, name, phone} = req.body;
-    //send responnse to frontend
-
     const saveUser = await prisma.user.create({
       data: {
         email: email,
@@ -48,14 +47,18 @@ app.post("/user", async(req,res)=>{
 })
 
 
+app.post("/post", upload.single("image") , async (req, res) => {
 
-
-
-app.post("/post", async (req, res) => {
+  console.log(req.file.path)
   ///get data from body-manidatory
   try {
     const { title, content, published, user_id } = req.body;
 
+    let image = req.file.path;
+    image = image.replace(/\\/g,'/')
+
+
+     const changePublished = published === "true";
     //validation /optional
 
     if (!title) {
@@ -64,12 +67,14 @@ app.post("/post", async (req, res) => {
       });
     }
 
+
     //to save data in database
     const saveData = await prisma.post.create({
       data: {
         title,
         content,
-        published,
+        published:changePublished,
+        image:image,
         user_id: parseInt(user_id),
       },
     });
@@ -91,15 +96,36 @@ app.post("/post", async (req, res) => {
 app.put('/post/:id', async(req,res)=>{
     try {
       //get id req.params
+      const {id} = req.params;
       //get data from frontend
-      //save data to user to id  method update use / where
+      const { title, content, published, user_id } = req.body; 
+      
+      const changePublished = published === "true";
 
-      //return response
+      const updatePost =  await prisma.post.update({
+           where: {
+            id: parseInt(id),
+           },
+            data: {
+              title,
+              content,
+              published:changePublished,
+              image:'image',
+              user_id: parseInt(user_id),
+            },
+      })
+
+      return res.status(200).json({
+        message: "Post updated successfully",
+        data: updatePost,
+      })
+   
 
     } catch (error) {
-
-      //return error
-      
+      return res.status(500).json({
+        message: "Sever error",
+        error: error,
+      })
     }
 }) 
 
@@ -111,22 +137,23 @@ app.put('/post/:id', async(req,res)=>{
 
 
 app.get('/post', async(req,res)=> {
-try {
-    const data = await prisma.post.findMany({
-      include: {
-        user: true,
-      },
-    });
-    return res.status(200).json({
-      message: "Post fetched successfully",
-      data: data,
-    })
-} catch (error) {
-    return res.status(500).json({
-      message: "Sever error",
-      error: error,
-    })
-}})
+  console.log(req.body)
+// try {
+//     const data = await prisma.post.findMany({
+//       include: {
+//         user: true,
+//       },
+//     });
+//     return res.status(200).json({
+//       message: "Post fetched successfully",
+//       data: data,
+//     })
+// } catch (error) {
+//     return res.status(500).json({
+//       message: "Sever error",
+//       error: error,
+//     })
+})
 
 
 
