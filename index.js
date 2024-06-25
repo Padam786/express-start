@@ -134,6 +134,17 @@ app.get("/post", async (req, res) => {
   }
 });
 
+
+//homework /// delete the post , take  reference from update and method should be delete where id === id 
+app.delete("/post/:id", async (req, res) => {
+
+
+
+
+});
+
+
+
 //listening port
 
 app.listen(port, () => {
