@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+const router = express.Router();
 //for json support middlware
 
 app.use(express.json());
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const prisma = require("./config/prisma");
 const upload = require("./middleware/upload");
+app.use(router);
 
 //homework for you .
 
@@ -37,6 +39,7 @@ app.post("/user", async (req, res) => {
     });
   }
 });
+
 
 app.post("/post", upload.single("image"), async (req, res) => {
   console.log(req.file.path);
@@ -137,9 +140,42 @@ app.get("/post", async (req, res) => {
 
 //homework /// delete the post , take  reference from update and method should be delete where id === id 
 app.delete("/post/:id", async (req, res) => {
+   try {
+        const {id} =req.params;
 
+        //check post available or not 
 
+        const checkPost = await prisma.post.findFirst({
+          where:{
+            id:parseInt(id)
+          }
+        })
 
+        if(!checkPost){
+           return res.status(404).json({
+            message:"Post not found"
+          })
+        }
+
+        const deletePost = await prisma.post.delete({
+          where:{
+            id:parseInt(id)
+          }
+        })
+
+        return res.status(200).json({
+          message:"Post deleted successfully",
+          data:deletePost
+        })
+
+    
+   } catch (error) {
+    return res.status(500).json({
+       message: "Server Error",
+       error:error
+    })
+    
+   }
 
 });
 
