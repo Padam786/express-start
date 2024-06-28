@@ -11,9 +11,6 @@ app.use("/storage", express.static("storage"));
 //for urlencoded support or object support middlewar
 app.use(express.urlencoded({ extended: true }));
 
-
-//homework for you .
-
 groupRoutes(app)
 
 //listening port

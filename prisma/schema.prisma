@@ -11,10 +11,11 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement()) //1
-  email String  @unique
-  name  String?
-  phone  Int
+  id       Int     @id @default(autoincrement()) //1
+  email    String  @unique
+  name     String?
+  phone    Int
+  password String 
 
   ///make relations here
   posts   Post[]
@@ -27,7 +28,6 @@ model Post {
   content   String?
   image     String  @default("null")
   published Boolean @default(false)
-
 
   user    User @relation(fields: [user_id], references: [id])
   user_id Int //1
