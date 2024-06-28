@@ -2,6 +2,8 @@ const express = require("express");
 const groupRoutes = require("./routes/mainRoute");
 const app = express();
 const port = 3000;
+require('dotenv').config();
+
 //for json support middlware
 
 app.use(express.json());
