@@ -31,6 +31,7 @@ const createUser = async (req, res) => {
             password:hasPassword
           }
     })
+    
 
     const accessToken = jwt.sign({
        id:saveUserData.id,
