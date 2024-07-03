@@ -17,6 +17,8 @@ const authCheck = (req, res, next) => {
         message: "Access denied. Invalid token.",
       });
     }
+    req.user = verifyToken;
+    next();
 
   }
 
