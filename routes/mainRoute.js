@@ -1,4 +1,5 @@
 
+const authCheck = require('../middleware/authCheck');
 const userRoute  = require('./userRoute')
 
 function groupRoutes(app) {
