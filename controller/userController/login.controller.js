@@ -14,6 +14,7 @@ const login = async (req, res) => {
         email: email,
       },
     });
+    
 
     //if not exist it will return with message
     if (!checkEmail) {

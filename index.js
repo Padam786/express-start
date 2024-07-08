@@ -1,8 +1,12 @@
 const express = require("express");
 const groupRoutes = require("./routes/mainRoute");
 const app = express();
+const cors = require("cors");
 const port = 3000;
+
+app.use(cors());
 require('dotenv').config();
+
 
 //for json support middlware
 
