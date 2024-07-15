@@ -7,8 +7,9 @@ const repairRoute = require("./repairRoute"
 )
 function groupRoutes(app) {
     app.use('/user', userRoute  )
-    app.use('/', genraleRoute)
     app.use("/repair",repairRoute )
+    app.use('/', genraleRoute)
+
 }
 
 

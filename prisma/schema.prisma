@@ -16,7 +16,7 @@ model User {
   name     String?
   phone    Int
   password String 
-  
+
 
   ///make relations here
   posts   Post[]
@@ -43,6 +43,7 @@ model Repair {
   product_name String
   price        Int
   created_at   DateTime @default(now())
+  
 
   User   User @relation(fields: [userId], references: [id])
   userId Int

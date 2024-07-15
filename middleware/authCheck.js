@@ -5,7 +5,7 @@ const authCheck = (req, res, next) => {
 
   if (!accessToken) {
     return res.status(401).json({
-      message: "Access denied. No token provided.",
+      message: "Access denied. You are not authorized.",
     });
   } else {
     const token = accessToken.split(" ")[1];
