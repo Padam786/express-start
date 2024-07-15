@@ -16,10 +16,12 @@ model User {
   name     String?
   phone    Int
   password String 
+  
 
   ///make relations here
   posts   Post[]
   repairs Repair[]
+
 }
 
 model Post {

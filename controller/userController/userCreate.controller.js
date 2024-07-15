@@ -6,7 +6,7 @@ const createUser = async (req, res) => {
   try {
 
     const {name, email, password,phone} = req.body;
-    
+
     const emailCheck = await prisma.user.findUnique({
       where: {
         email: email,
@@ -25,25 +25,29 @@ const createUser = async (req, res) => {
 
     const saveUserData = await prisma.user.create({
           data:{
-            name,
-            email,
+            name:name,
+            email:email,
             phone:parseInt(phone),
-            password:hasPassword
+            password:hasPassword,
           }
     })
     
 
-    const accessToken = jwt.sign({
+    const accessToken = jwt.sign(
+      
+      {
        id:saveUserData.id,
        email:saveUserData.email,
     },
+
+
      process.env.SECERET_KEY,
      {
-       expiresIn: "1h",
+       expiresIn: "1d",
      }
   )
 
-    res.status(201).json({
+   return res.status(201).json({
       message: "User created successfully",
       data: saveUserData,
       accessToken:accessToken,

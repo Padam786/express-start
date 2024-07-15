@@ -9,6 +9,12 @@ const authCheck = (req, res, next) => {
     });
   } else {
     const token = accessToken.split(" ")[1];
+     if (!token) {
+       return res.status(401).json({
+         message: "Access denied. No token provided.",
+       });
+     }
+
     const verifyToken = jwt.verify(token, process.env.SECERET_KEY);
 
 

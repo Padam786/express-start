@@ -33,7 +33,6 @@ const login = async (req, res) => {
       });
     }
 
-    //homework : write the rest of the code below
 
     const accessToken = jwt.sign(
       {
