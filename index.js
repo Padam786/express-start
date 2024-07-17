@@ -9,7 +9,6 @@ let users = require("./MOCK_DATA.json");
 const port = 3000;
 
 
-
 //listening port
 
 app.listen(port, () => {
