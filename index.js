@@ -1,13 +1,8 @@
 const express = require("express");
+const groupRoutes = require("./routes/mainRoute");
 const app = express();
-const fs = require("fs");
-
-let users = require("./MOCK_DATA.json");
-
-
-
+const cors = require("cors");
 const port = 3000;
-
 
 //listening port
 
