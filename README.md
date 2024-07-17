@@ -36,16 +36,25 @@ app.use(express.urlencoded({ extended: true }))
 File Structure:
 
 a) Config: Configuration and setting files.
+
 b) Controller: Callback and logical functions.
+
 c) Middleware: Middleware functions.
+
 d) Routes: Route definitions.
-e) Storage: Static storage for files (images, videos, etc.).
+
+e) Storage: Static storage for files (images, videos, etc.)
+
 f) index.js: Entry point of the application.
+
 g) package.json: Metadata, packages, and scripts.
+
 h) .env: Environment variables.
 
 Optional Folders:
 
 a) Helper: Reusable helper functions.
+
 b) Utils: Utility functions.
+
 c) Model: Database models.
